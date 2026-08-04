@@ -12,14 +12,6 @@ const BRAND_OPTIONS: { label: string; value: Brand }[] = [
   { label: "cloud", value: "Cloud" },
 ];
 
-const REQUEST_TYPE_OPTIONS = [
-  { label: "report", value: "report" },
-  { label: "script", value: "script" },
-  { label: "video", value: "video" },
-  { label: "statics", value: "statics" },
-  { label: "b-roll", value: "b-roll" },
-];
-
 const TITLE_MAX_LENGTH = 60;
 
 function briefToTitle(brief: string) {
@@ -32,7 +24,6 @@ export default function NewRequestPage() {
   const router = useRouter();
   const { addJob } = useJobs();
   const [brand, setBrand] = useState<Brand>("Ovrload");
-  const [requestType, setRequestType] = useState(REQUEST_TYPE_OPTIONS[0].value);
   const [brief, setBrief] = useState("");
 
   const canSubmit = brief.trim().length > 0;
@@ -43,7 +34,6 @@ export default function NewRequestPage() {
 
     addJob({
       brand,
-      requestType,
       title: briefToTitle(brief),
     });
 
@@ -61,15 +51,6 @@ export default function NewRequestPage() {
             options={BRAND_OPTIONS}
             value={brand}
             onChange={setBrand}
-          />
-        </div>
-
-        <div className={styles.field}>
-          <span className={styles.label}>request type</span>
-          <OptionSelector
-            options={REQUEST_TYPE_OPTIONS}
-            value={requestType}
-            onChange={setRequestType}
           />
         </div>
 

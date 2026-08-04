@@ -7,11 +7,15 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { JOBS as SEED_JOBS, type Brand, type Job } from "./jobs";
+import {
+  JOBS as SEED_JOBS,
+  PENDING_REQUEST_TYPE,
+  type Brand,
+  type Job,
+} from "./jobs";
 
 type NewJobInput = {
   brand: Brand;
-  requestType: string;
   title: string;
 };
 
@@ -27,11 +31,11 @@ let nextJobId = SEED_JOBS.length + 1;
 export function JobsProvider({ children }: { children: ReactNode }) {
   const [jobs, setJobs] = useState<Job[]>(SEED_JOBS);
 
-  const addJob = ({ brand, requestType, title }: NewJobInput) => {
+  const addJob = ({ brand, title }: NewJobInput) => {
     const job: Job = {
       id: `job-${nextJobId++}`,
       brand,
-      requestType,
+      requestType: PENDING_REQUEST_TYPE,
       title,
       status: "queued",
       time: "Just now",

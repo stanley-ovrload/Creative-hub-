@@ -11,6 +11,9 @@ export type Job = {
   time: string;
 };
 
+// requestType placeholder until the orchestrator classifies the brief.
+export const PENDING_REQUEST_TYPE = "routing…";
+
 export const STATUS_LABELS: Record<JobStatus, string> = {
   queued: "queued",
   running: "running",
