@@ -6,9 +6,9 @@ import styles from "./filter-bar.module.css";
 export type BrandFilter = "all" | Brand;
 
 const FILTERS: { label: string; value: BrandFilter }[] = [
-  { label: "All", value: "all" },
-  { label: "Ovrload", value: "Ovrload" },
-  { label: "Cloud", value: "Cloud" },
+  { label: "all", value: "all" },
+  { label: "ovrload", value: "Ovrload" },
+  { label: "cloud", value: "Cloud" },
 ];
 
 export default function FilterBar({

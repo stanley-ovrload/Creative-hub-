@@ -8,16 +8,16 @@ import { useJobs } from "@/lib/job-store";
 import styles from "./page.module.css";
 
 const BRAND_OPTIONS: { label: string; value: Brand }[] = [
-  { label: "Ovrload", value: "Ovrload" },
-  { label: "Cloud", value: "Cloud" },
+  { label: "ovrload", value: "Ovrload" },
+  { label: "cloud", value: "Cloud" },
 ];
 
 const REQUEST_TYPE_OPTIONS = [
-  { label: "Report", value: "Report" },
-  { label: "Script", value: "Script" },
-  { label: "Video", value: "Video" },
-  { label: "Statics", value: "Statics" },
-  { label: "B-roll", value: "B-roll" },
+  { label: "report", value: "report" },
+  { label: "script", value: "script" },
+  { label: "video", value: "video" },
+  { label: "statics", value: "statics" },
+  { label: "b-roll", value: "b-roll" },
 ];
 
 const TITLE_MAX_LENGTH = 60;
