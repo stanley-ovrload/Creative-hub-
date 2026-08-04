@@ -1,7 +1,7 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
 }
 
 .header {
@@ -11,9 +11,9 @@
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 .table {
@@ -29,12 +29,12 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--muted);
-  padding: 0 16px 10px;
-  border-bottom: 1px solid var(--border);
+  padding: 0 20px 14px;
+  border-bottom: var(--border-width) solid var(--border);
 }
 
 .row {
-  border-bottom: 1px solid var(--border);
+  border-bottom: var(--border-width) solid var(--border);
   transition: background-color 0.15s ease;
 }
 
@@ -43,15 +43,22 @@
 }
 
 .td {
-  padding: 14px 16px;
+  padding: 20px;
   vertical-align: middle;
+  font-size: 14px;
 }
 
 .muted {
   color: var(--muted);
 }
 
+.pending {
+  color: var(--brand-pink);
+  font-style: italic;
+}
+
 .timeCol {
-  width: 110px;
+  width: 120px;
   white-space: nowrap;
+  font-size: 13px;
 }

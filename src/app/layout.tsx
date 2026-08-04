@@ -51,7 +51,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Sidebar />
             <div className={styles.content}>
               <TopBar />
-              <main className={styles.main}>{children}</main>
+              <main className={styles.main}>
+                <div className={styles.mainInner}>{children}</div>
+              </main>
             </div>
           </div>
         </JobsProvider>

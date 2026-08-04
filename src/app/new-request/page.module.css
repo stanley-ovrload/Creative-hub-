@@ -1,26 +1,26 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
   max-width: 640px;
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .label {
@@ -31,31 +31,34 @@
 
 .textarea {
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--foreground);
   background: var(--background);
-  border: 1px solid var(--border);
+  border: var(--border-width) solid var(--border);
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   resize: vertical;
-  min-height: 160px;
+  min-height: 180px;
 }
 
 .textarea:focus {
   outline: none;
-  border-color: var(--foreground);
+  border-color: var(--brand-ovrload);
 }
 
 .submit {
   align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
-  color: var(--background);
-  background: var(--foreground);
+  color: var(--color-platinum);
+  background: var(--gradient-house);
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 12px 22px;
   cursor: pointer;
   transition: opacity 0.15s ease;
 }
@@ -66,5 +69,5 @@
 }
 
 .submit:not(:disabled):hover {
-  opacity: 0.85;
+  opacity: 0.88;
 }

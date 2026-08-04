@@ -13,5 +13,10 @@
 .main {
   flex: 1;
   overflow-y: auto;
-  padding: 40px;
+  padding: 48px 56px;
+}
+
+.mainInner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
 }

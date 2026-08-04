@@ -69,7 +69,7 @@ export default function NewRequestPage() {
         </div>
 
         <button type="submit" className={styles.submit} disabled={!canSubmit}>
-          submit request
+          submit request <span aria-hidden="true">→</span>
         </button>
       </form>
     </div>

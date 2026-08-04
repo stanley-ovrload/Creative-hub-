@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import BrandTag from "@/components/job-board/brand-tag";
 import FilterBar, { type BrandFilter } from "@/components/job-board/filter-bar";
 import StatusPill from "@/components/job-board/status-pill";
+import { PENDING_REQUEST_TYPE } from "@/lib/jobs";
 import { useJobs } from "@/lib/job-store";
 import styles from "./page.module.css";
 
@@ -40,7 +41,13 @@ export default function JobBoardPage() {
               <td className={styles.td}>
                 <BrandTag brand={job.brand} />
               </td>
-              <td className={`${styles.td} ${styles.muted}`}>
+              <td
+                className={`${styles.td} ${
+                  job.requestType === PENDING_REQUEST_TYPE
+                    ? styles.pending
+                    : styles.muted
+                }`}
+              >
                 {job.requestType}
               </td>
               <td className={styles.td}>{job.title}</td>

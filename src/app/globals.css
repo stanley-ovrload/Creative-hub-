@@ -5,16 +5,17 @@
   --muted: var(--fg-muted);
   --sidebar-bg: var(--bg-elevated);
   --hover-bg: var(--bg-hover);
+  --active-bg: var(--bg-active);
 }
 
 html {
   height: 100%;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   html {
-    color-scheme: light;
+    color-scheme: dark;
   }
 }
 
@@ -29,6 +30,8 @@ body {
   color: var(--fg);
   background: var(--bg);
   font-family: var(--font-figtree), Inter, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -57,4 +60,12 @@ h6 {
   font-family: var(--font-satoshi), Inter, system-ui, sans-serif;
   font-weight: 500;
   letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 19px;
 }

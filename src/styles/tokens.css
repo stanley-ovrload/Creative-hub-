@@ -5,19 +5,23 @@
  */
 
 :root {
-  /* Neutral base (carbon/platinum). Dark is the default surface. */
   --color-carbon: #1e1e1e;
   --color-platinum: #f1f1f1;
 
-  --bg: var(--color-carbon);
-  --bg-elevated: #262626;
-  --bg-hover: #2e2e2e;
-  --fg: var(--color-platinum);
-  --fg-muted: #9a9a9a;
-  --border: rgba(241, 241, 241, 0.12);
+  /* Neutral base — white/near-white by default. */
+  --bg: #f7f8f7;
+  --bg-elevated: #ffffff;
+  --fg: var(--color-carbon);
+  --fg-muted: #6b6b72;
+  --border: rgba(30, 30, 30, 0.08);
   --border-width: 0.5px;
 
-  /* House accent — Ovrload's blue -> teal -> Cloud's green. Sparingly. */
+  /* Ambient accent — soft green wash used for hovers / active nav / panels. */
+  --bg-hover: #eef7f1;
+  --bg-active: #e1f1e6;
+
+  /* House accent — Ovrload's blue -> teal -> Cloud's green. Sparingly:
+     primary button + key accent lines only, never a background wash. */
   --gradient-house: linear-gradient(90deg, #008eff, #00bd9b, #8ab976);
 
   /* Brand accents (functional, never a full re-skin). */
@@ -25,6 +29,10 @@
   --brand-ovrload-chip-bg: rgba(0, 142, 255, 0.12);
   --brand-cloud: #2e9e5b;
   --brand-cloud-chip-bg: rgba(46, 158, 91, 0.14);
+
+  /* Supporting accent. */
+  --brand-pink: #ed6d9d;
+  --brand-pink-chip-bg: rgba(237, 109, 157, 0.14);
 
   /*
    * Status palette — solid fills (brand chips are soft tints; status
@@ -47,15 +55,20 @@
   --radius-card: 13px;
   --radius-pill: 20px;
   --radius-chip: 6px;
+
+  /* Layout */
+  --content-max-width: 1140px;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg: var(--color-platinum);
-    --bg-elevated: #e6e6e6;
-    --bg-hover: #dcdcdc;
-    --fg: var(--color-carbon);
-    --fg-muted: #6b6b6b;
-    --border: rgba(30, 30, 30, 0.12);
+    --bg: var(--color-carbon);
+    --bg-elevated: #262626;
+    --fg: var(--color-platinum);
+    --fg-muted: #9a9a9a;
+    --border: rgba(241, 241, 241, 0.12);
+
+    --bg-hover: #2e2e2e;
+    --bg-active: #33362f;
   }
 }

@@ -1,10 +1,10 @@
 .sidebar {
-  width: 240px;
+  width: 248px;
   flex-shrink: 0;
   height: 100%;
   background: var(--sidebar-bg);
   border-right: var(--border-width) solid var(--border);
-  padding: 24px 12px;
+  padding: 32px 16px;
 }
 
 .nav {
@@ -15,16 +15,16 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .link {
   position: relative;
   display: block;
-  padding: 10px 12px 10px 16px;
+  padding: 14px 16px 14px 20px;
   border-radius: var(--radius-chip);
   font-family: var(--font-satoshi), Inter, system-ui, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--muted);
   transition: background-color 0.15s ease, color 0.15s ease;
@@ -34,8 +34,8 @@
   content: "";
   position: absolute;
   left: 0;
-  top: 4px;
-  bottom: 4px;
+  top: 6px;
+  bottom: 6px;
   width: 3px;
   border-radius: 2px;
   background: transparent;
@@ -47,8 +47,9 @@
 }
 
 .active {
-  background: var(--hover-bg);
+  background: var(--active-bg);
   color: var(--foreground);
+  font-weight: 600;
 }
 
 .active::before {
