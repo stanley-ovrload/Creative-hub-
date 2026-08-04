@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import OptionSelector from "@/components/new-request/option-selector";
 import { type Brand } from "@/lib/jobs";
-import { useJobs } from "@/lib/job-store";
 import styles from "./page.module.css";
 
 const BRAND_OPTIONS: { label: string; value: Brand }[] = [
@@ -12,30 +11,33 @@ const BRAND_OPTIONS: { label: string; value: Brand }[] = [
   { label: "cloud", value: "Cloud" },
 ];
 
-const TITLE_MAX_LENGTH = 60;
-
-function briefToTitle(brief: string) {
-  const collapsed = brief.trim().replace(/\s+/g, " ");
-  if (collapsed.length <= TITLE_MAX_LENGTH) return collapsed;
-  return `${collapsed.slice(0, TITLE_MAX_LENGTH - 1).trimEnd()}…`;
-}
-
 export default function NewRequestPage() {
   const router = useRouter();
-  const { addJob } = useJobs();
   const [brand, setBrand] = useState<Brand>("Ovrload");
   const [brief, setBrief] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const canSubmit = brief.trim().length > 0;
+  const canSubmit = brief.trim().length > 0 && !submitting;
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if (!canSubmit) return;
 
-    addJob({
-      brand,
-      title: briefToTitle(brief),
+    setSubmitting(true);
+    setError(null);
+
+    const res = await fetch("/api/jobs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ brand, brief }),
     });
+
+    if (!res.ok) {
+      setSubmitting(false);
+      setError("couldn't submit that request — try again.");
+      return;
+    }
 
     router.push("/job-board");
   }
@@ -67,6 +69,8 @@ export default function NewRequestPage() {
             rows={8}
           />
         </div>
+
+        {error && <p className={styles.error}>{error}</p>}
 
         <button type="submit" className={styles.submit} disabled={!canSubmit}>
           submit request <span aria-hidden="true">→</span>

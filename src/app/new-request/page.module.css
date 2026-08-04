@@ -46,6 +46,11 @@
   border-color: var(--brand-ovrload);
 }
 
+.error {
+  font-size: 13px;
+  color: var(--status-hardbreak-fg);
+}
+
 .submit {
   align-self: flex-start;
   display: inline-flex;

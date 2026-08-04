@@ -1,16 +1,36 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BrandTag from "@/components/job-board/brand-tag";
 import FilterBar, { type BrandFilter } from "@/components/job-board/filter-bar";
 import StatusPill from "@/components/job-board/status-pill";
-import { PENDING_REQUEST_TYPE } from "@/lib/jobs";
-import { useJobs } from "@/lib/job-store";
+import { formatRelativeTime } from "@/lib/format-time";
+import { PENDING_REQUEST_TYPE, type Job } from "@/lib/jobs";
 import styles from "./page.module.css";
 
+const POLL_INTERVAL_MS = 2000;
+
 export default function JobBoardPage() {
-  const { jobs: allJobs } = useJobs();
+  const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [filter, setFilter] = useState<BrandFilter>("all");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function poll() {
+      const res = await fetch("/api/jobs");
+      if (!res.ok || cancelled) return;
+      const jobs: Job[] = await res.json();
+      if (!cancelled) setAllJobs(jobs);
+    }
+
+    poll();
+    const interval = setInterval(poll, POLL_INTERVAL_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
 
   const jobs = useMemo(
     () =>
@@ -55,7 +75,7 @@ export default function JobBoardPage() {
                 <StatusPill status={job.status} />
               </td>
               <td className={`${styles.td} ${styles.muted} ${styles.timeCol}`}>
-                {job.time}
+                {formatRelativeTime(job.createdAt)}
               </td>
             </tr>
           ))}

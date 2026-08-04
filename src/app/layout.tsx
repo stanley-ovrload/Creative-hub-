@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Figtree } from "next/font/google";
 import Sidebar from "@/components/sidebar";
-import { JobsProvider } from "@/lib/job-store";
 import "@/styles/tokens.css";
 import "./globals.css";
 import styles from "./layout.module.css";
@@ -45,14 +44,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${satoshi.variable} ${figtree.variable}`}>
       <body>
-        <JobsProvider>
-          <div className={styles.shell}>
-            <Sidebar />
-            <main className={styles.main}>
-              <div className={styles.mainInner}>{children}</div>
-            </main>
-          </div>
-        </JobsProvider>
+        <div className={styles.shell}>
+          <Sidebar />
+          <main className={styles.main}>
+            <div className={styles.mainInner}>{children}</div>
+          </main>
+        </div>
       </body>
     </html>
   );

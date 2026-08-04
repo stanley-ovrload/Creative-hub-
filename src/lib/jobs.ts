@@ -8,8 +8,17 @@ export type Job = {
   requestType: string;
   title: string;
   status: JobStatus;
-  time: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
 };
+
+// Seed shape: id/brand/requestType/title/status only — the store fills
+// in userId/createdAt/updatedAt when it seeds the database.
+export type JobSeed = Pick<
+  Job,
+  "id" | "brand" | "requestType" | "title" | "status"
+>;
 
 // requestType placeholder until the orchestrator classifies the brief.
 export const PENDING_REQUEST_TYPE = "routing…";
@@ -22,14 +31,21 @@ export const STATUS_LABELS: Record<JobStatus, string> = {
   "hard-break": "hard break",
 };
 
-export const JOBS: Job[] = [
+const TITLE_MAX_LENGTH = 60;
+
+export function briefToTitle(brief: string): string {
+  const collapsed = brief.trim().replace(/\s+/g, " ");
+  if (collapsed.length <= TITLE_MAX_LENGTH) return collapsed;
+  return `${collapsed.slice(0, TITLE_MAX_LENGTH - 1).trimEnd()}…`;
+}
+
+export const JOBS: JobSeed[] = [
   {
     id: "job-01",
     brand: "Ovrload",
     requestType: "Product shot",
     title: "Fall lookbook cover",
     status: "queued",
-    time: "2m ago",
   },
   {
     id: "job-02",
@@ -37,7 +53,6 @@ export const JOBS: Job[] = [
     requestType: "Video ad",
     title: "Onboarding explainer v3",
     status: "running",
-    time: "6m ago",
   },
   {
     id: "job-03",
@@ -45,7 +60,6 @@ export const JOBS: Job[] = [
     requestType: "Social carousel",
     title: "Instagram launch pack",
     status: "running",
-    time: "14m ago",
   },
   {
     id: "job-04",
@@ -53,7 +67,6 @@ export const JOBS: Job[] = [
     requestType: "Copy variants",
     title: "Pricing page headlines",
     status: "in-qc",
-    time: "22m ago",
   },
   {
     id: "job-05",
@@ -61,7 +74,6 @@ export const JOBS: Job[] = [
     requestType: "Voiceover",
     title: "Founder testimonial cut",
     status: "in-qc",
-    time: "41m ago",
   },
   {
     id: "job-06",
@@ -69,7 +81,6 @@ export const JOBS: Job[] = [
     requestType: "Landing page graphic",
     title: "Homepage hero banner",
     status: "done",
-    time: "1h ago",
   },
   {
     id: "job-07",
@@ -77,7 +88,6 @@ export const JOBS: Job[] = [
     requestType: "UGC video",
     title: "TikTok hook v2",
     status: "done",
-    time: "2h ago",
   },
   {
     id: "job-08",
@@ -85,7 +95,6 @@ export const JOBS: Job[] = [
     requestType: "Image batch",
     title: "Email header set",
     status: "hard-break",
-    time: "3h ago",
   },
   {
     id: "job-09",
@@ -93,7 +102,6 @@ export const JOBS: Job[] = [
     requestType: "Product shot",
     title: "Q3 catalog refresh",
     status: "hard-break",
-    time: "5h ago",
   },
   {
     id: "job-10",
@@ -101,6 +109,5 @@ export const JOBS: Job[] = [
     requestType: "Video ad",
     title: "Retargeting bumper set",
     status: "queued",
-    time: "Yesterday",
   },
 ];

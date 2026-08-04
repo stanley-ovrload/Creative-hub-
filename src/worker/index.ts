@@ -1,4 +1,4 @@
-import { getOldestQueuedJob, updateJobStatus } from "../lib/job-queue";
+import { claimOldestQueuedJob, updateJobStatus } from "../lib/job-queue";
 
 const POLL_INTERVAL_MS = 1500;
 const WORK_DURATION_MS = 2000;
@@ -15,15 +15,14 @@ async function runLoop(): Promise<void> {
   log("started, polling for queued jobs...");
 
   while (true) {
-    const job = getOldestQueuedJob();
+    const job = claimOldestQueuedJob();
 
     if (!job) {
       await sleep(POLL_INTERVAL_MS);
       continue;
     }
 
-    log(`picked up ${job.id} ("${job.title}") — queued -> running`);
-    updateJobStatus(job.id, "running");
+    log(`claimed ${job.id} ("${job.title}") — queued -> running`);
 
     await sleep(WORK_DURATION_MS);
 
