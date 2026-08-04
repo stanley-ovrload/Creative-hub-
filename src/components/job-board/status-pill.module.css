@@ -1,0 +1,61 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.queued {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.running {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.inQc {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.done {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.hardBreak {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+@media (prefers-color-scheme: dark) {
+  .queued {
+    background: #1e293b;
+    color: #94a3b8;
+  }
+
+  .running {
+    background: #1e3a5f;
+    color: #60a5fa;
+  }
+
+  .inQc {
+    background: #3f2d0a;
+    color: #fbbf24;
+  }
+
+  .done {
+    background: #052e16;
+    color: #4ade80;
+  }
+
+  .hardBreak {
+    background: #450a0a;
+    color: #f87171;
+  }
+}
