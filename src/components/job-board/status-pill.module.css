@@ -1,61 +1,35 @@
 .pill {
   display: inline-flex;
   align-items: center;
+  gap: 4px;
   padding: 3px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;
 }
 
 .queued {
-  background: #f1f5f9;
-  color: #475569;
+  background: var(--status-queued-bg);
+  color: var(--status-queued-fg);
 }
 
 .running {
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: var(--status-running-bg);
+  color: var(--status-running-fg);
 }
 
 .inQc {
-  background: #fffbeb;
-  color: #b45309;
+  background: var(--status-inqc-bg);
+  color: var(--status-inqc-fg);
 }
 
 .done {
-  background: #f0fdf4;
-  color: #15803d;
+  background: var(--status-done-bg);
+  color: var(--status-done-fg);
 }
 
 .hardBreak {
-  background: #fef2f2;
-  color: #b91c1c;
-}
-
-@media (prefers-color-scheme: dark) {
-  .queued {
-    background: #1e293b;
-    color: #94a3b8;
-  }
-
-  .running {
-    background: #1e3a5f;
-    color: #60a5fa;
-  }
-
-  .inQc {
-    background: #3f2d0a;
-    color: #fbbf24;
-  }
-
-  .done {
-    background: #052e16;
-    color: #4ade80;
-  }
-
-  .hardBreak {
-    background: #450a0a;
-    color: #f87171;
-  }
+  background: var(--status-hardbreak-bg);
+  color: var(--status-hardbreak-fg);
 }

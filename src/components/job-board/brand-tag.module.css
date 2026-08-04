@@ -1,23 +1,21 @@
-.tag {
+.chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  justify-content: center;
+  min-width: 64px;
+  padding: 3px 10px;
+  border-radius: var(--radius-chip);
+  font-size: 12px;
   font-weight: 500;
-  color: var(--foreground);
+  text-align: center;
 }
 
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  flex-shrink: 0;
+.ovrload {
+  background: var(--brand-ovrload-chip-bg);
+  color: var(--brand-ovrload);
 }
 
-.ovrload .dot {
-  background: #8b5cf6;
-}
-
-.cloud .dot {
-  background: #06b6d4;
+.cloud {
+  background: var(--brand-cloud-chip-bg);
+  color: var(--brand-cloud);
 }

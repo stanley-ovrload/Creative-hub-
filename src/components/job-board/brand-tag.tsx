@@ -8,9 +8,8 @@ const BRAND_CLASS: Record<Brand, string> = {
 
 export default function BrandTag({ brand }: { brand: Brand }) {
   return (
-    <span className={`${styles.tag} ${BRAND_CLASS[brand]}`}>
-      <span className={styles.dot} />
-      {brand}
+    <span className={`${styles.chip} ${BRAND_CLASS[brand]}`}>
+      {brand.toLowerCase()}
     </span>
   );
 }

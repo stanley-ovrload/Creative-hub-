@@ -12,11 +12,11 @@ export type Job = {
 };
 
 export const STATUS_LABELS: Record<JobStatus, string> = {
-  queued: "Queued",
-  running: "Running",
-  "in-qc": "In QC",
-  done: "Done",
-  "hard-break": "Hard break",
+  queued: "queued",
+  running: "running",
+  "in-qc": "in qc",
+  done: "done",
+  "hard-break": "hard break",
 };
 
 export const JOBS: Job[] = [

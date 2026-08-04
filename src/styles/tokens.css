@@ -26,17 +26,22 @@
   --brand-cloud: #2e9e5b;
   --brand-cloud-chip-bg: rgba(46, 158, 91, 0.14);
 
-  /* Status palette — deliberately separate from brand colour. */
-  --status-queued-bg: #33333a;
-  --status-queued-fg: #b4b4bd;
-  --status-running-bg: rgba(0, 142, 255, 0.16);
-  --status-running-fg: #4db3ff;
-  --status-inqc-bg: rgba(245, 158, 11, 0.16);
-  --status-inqc-fg: #f5b942;
-  --status-done-bg: rgba(34, 197, 94, 0.16);
-  --status-done-fg: #4ade80;
-  --status-hardbreak-bg: rgba(239, 68, 68, 0.16);
-  --status-hardbreak-fg: #f87171;
+  /*
+   * Status palette — solid fills (brand chips are soft tints; status
+   * pills are solid, so the two are never confused). "done" uses a
+   * darker green than Cloud's brand green, plus a check icon, so it
+   * doesn't read as a Cloud chip.
+   */
+  --status-queued-bg: #3f3f46;
+  --status-queued-fg: #e4e4e7;
+  --status-running-bg: var(--brand-ovrload);
+  --status-running-fg: var(--color-platinum);
+  --status-inqc-bg: #f59e0b;
+  --status-inqc-fg: var(--color-carbon);
+  --status-done-bg: #15803d;
+  --status-done-fg: var(--color-platinum);
+  --status-hardbreak-bg: #b91c1c;
+  --status-hardbreak-fg: var(--color-platinum);
 
   /* Radii */
   --radius-card: 13px;
@@ -52,8 +57,5 @@
     --fg: var(--color-carbon);
     --fg-muted: #6b6b6b;
     --border: rgba(30, 30, 30, 0.12);
-
-    --status-queued-bg: #e2e2e2;
-    --status-queued-fg: #55555f;
   }
 }
