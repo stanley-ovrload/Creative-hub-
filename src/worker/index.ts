@@ -1,5 +1,14 @@
 import { claimOldestQueuedJob, updateJobStatus } from "../lib/job-queue";
 
+// Next.js auto-loads .env for the console; this script doesn't, so load it
+// here too — otherwise DATABASE_PATH could point the worker and the
+// console at two different database files.
+try {
+  process.loadEnvFile();
+} catch {
+  // no .env file — fine, DATABASE_PATH just falls back to its default.
+}
+
 const POLL_INTERVAL_MS = 1500;
 const WORK_DURATION_MS = 2000;
 

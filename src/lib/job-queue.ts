@@ -3,18 +3,21 @@ import path from "path";
 import Database from "better-sqlite3";
 import { JOBS as SEED_JOBS, type Brand, type Job, type JobStatus } from "./jobs";
 
-const DB_PATH = path.join(process.cwd(), "data", "jobs.db");
-
 type JobRow = Job;
 
 let db: Database.Database | null = null;
 
+function getDbPath(): string {
+  return path.resolve(process.cwd(), process.env.DATABASE_PATH ?? "data/jobs.db");
+}
+
 function getDb(): Database.Database {
   if (db) return db;
 
-  fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+  const dbPath = getDbPath();
+  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
-  const instance = new Database(DB_PATH);
+  const instance = new Database(dbPath);
   instance.pragma("journal_mode = WAL");
 
   instance.exec(`
