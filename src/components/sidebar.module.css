@@ -1,0 +1,39 @@
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  height: 100%;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 24px 12px;
+}
+
+.nav {
+  height: 100%;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.link {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.link:hover {
+  background: var(--hover-bg);
+  color: var(--foreground);
+}
+
+.active {
+  background: var(--hover-bg);
+  color: var(--foreground);
+}
