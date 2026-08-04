@@ -13,6 +13,16 @@ The orchestrator is the only agent the team talks to. It plans, routes, coordina
 - Shared job store. The console and the worker read/write the same job store the console already uses. The console creates jobs; the worker updates their status; the board reflects it live.
 - Language: TypeScript, same repo as the console, using the Claude Agent SDK (@anthropic-ai/claude-agent-sdk), so job types and the store are shared.
 
+## Built for multiplayer from day one
+
+Even single-player today (one user, one worker), the plumbing already assumes more than one of each — so scaling later is a config change, not a rewrite.
+
+- **Every job carries a `userId`.** Hardcoded to `"me"` for now (no real auth yet), but it's a real column on every job row, so scoping the board to a real user later is a query filter, not a schema migration.
+- **The queue lives in the store, not in worker memory.** Job state is durable in the shared store, not held in any worker process. That store is a local SQLite file today (`data/jobs.db`, WAL mode) — WAL specifically so reads (the console polling) aren't blocked by the worker's writes. It's built to be swappable to a hosted Postgres instance later via a connection string, without touching the worker loop or the console.
+- **Atomic job claiming.** The worker claims the oldest queued job with one transaction — find the oldest queued row and mark it running as a single indivisible unit — so multiple worker processes pointed at the same store can never claim the same job. This is built and verified today, not aspirational.
+- **Configurable via env vars, not hardcoded.** The DB path is currently hardcoded (`data/jobs.db` under the repo root) — that's a known gap, not the target state. As real config shows up (a Postgres connection string, ports, secrets), it should go through env vars from the start, so there's nothing to sweep later when moving off a single local file.
+- **Every page assumes a logged-in user.** Auth today is one shared password for the whole team, not real accounts — but the UI and API should behave as though a real, distinct `userId` is always present, so swapping in real accounts later is an auth-provider change, not a rewrite of every page.
+
 ## The job object
 
 `{ id, brand ("Ovrload" | "Cloud"), brief (free text), status, type, plan, steps[], outputs[], error?, createdAt, updatedAt }`
