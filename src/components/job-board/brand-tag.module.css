@@ -12,10 +12,10 @@
 
 .ovrload {
   background: var(--brand-ovrload-chip-bg);
-  color: var(--brand-ovrload);
+  color: var(--brand-ovrload-chip-fg);
 }
 
 .cloud {
   background: var(--brand-cloud-chip-bg);
-  color: var(--brand-cloud);
+  color: var(--brand-cloud-chip-fg);
 }

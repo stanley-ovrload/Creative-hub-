@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Figtree } from "next/font/google";
 import Sidebar from "@/components/sidebar";
-import TopBar from "@/components/top-bar";
 import { JobsProvider } from "@/lib/job-store";
 import "@/styles/tokens.css";
 import "./globals.css";
@@ -49,12 +48,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <JobsProvider>
           <div className={styles.shell}>
             <Sidebar />
-            <div className={styles.content}>
-              <TopBar />
-              <main className={styles.main}>
-                <div className={styles.mainInner}>{children}</div>
-              </main>
-            </div>
+            <main className={styles.main}>
+              <div className={styles.mainInner}>{children}</div>
+            </main>
           </div>
         </JobsProvider>
       </body>

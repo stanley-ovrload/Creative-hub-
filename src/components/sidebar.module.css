@@ -4,7 +4,31 @@
   height: 100%;
   background: var(--sidebar-bg);
   border-right: var(--border-width) solid var(--border);
-  padding: 32px 16px;
+  padding: 28px 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+  margin-bottom: 32px;
+}
+
+.logoMark {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: var(--radius-chip);
+  background: var(--gradient-house);
+}
+
+.wordmark {
+  font-family: var(--font-satoshi), Inter, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
 }
 
 .nav {
@@ -20,9 +44,11 @@
 
 .link {
   position: relative;
-  display: block;
-  padding: 14px 16px 14px 20px;
-  border-radius: var(--radius-chip);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px 11px 20px;
+  border-radius: var(--radius-control);
   font-family: var(--font-satoshi), Inter, system-ui, sans-serif;
   font-size: 15px;
   font-weight: 500;
@@ -41,6 +67,10 @@
   background: transparent;
 }
 
+.link svg {
+  flex-shrink: 0;
+}
+
 .link:hover {
   background: var(--hover-bg);
   color: var(--foreground);
@@ -48,7 +78,7 @@
 
 .active {
   background: var(--active-bg);
-  color: var(--foreground);
+  color: var(--active-fg);
   font-weight: 600;
 }
 

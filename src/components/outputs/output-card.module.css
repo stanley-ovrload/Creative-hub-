@@ -28,7 +28,7 @@
   color: var(--foreground);
   background: var(--background);
   border: var(--border-width) solid var(--border);
-  border-radius: 7px;
+  border-radius: var(--radius-control);
   padding: 8px 16px;
   cursor: pointer;
   transition: background-color 0.15s ease;

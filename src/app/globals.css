@@ -2,10 +2,12 @@
 :root {
   --background: var(--bg);
   --foreground: var(--fg);
+  --secondary: var(--fg-secondary);
   --muted: var(--fg-muted);
   --sidebar-bg: var(--bg-elevated);
   --hover-bg: var(--bg-hover);
   --active-bg: var(--bg-active);
+  --active-fg: var(--bg-active-fg);
 }
 
 html {
@@ -64,6 +66,8 @@ h6 {
 
 h1 {
   font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 
 h2 {
