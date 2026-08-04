@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import styles from "./sidebar.module.css";
 
 const NAV_ITEMS = [
-  { label: "New request", href: "/new-request" },
-  { label: "Job board", href: "/job-board" },
-  { label: "Outputs", href: "/outputs" },
-  { label: "Brand memory", href: "/brand-memory" },
+  { label: "new request", href: "/new-request" },
+  { label: "job board", href: "/job-board" },
+  { label: "outputs", href: "/outputs" },
+  { label: "brand memory", href: "/brand-memory" },
 ];
 
 export default function Sidebar() {

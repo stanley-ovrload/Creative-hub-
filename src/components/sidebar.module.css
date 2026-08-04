@@ -3,7 +3,7 @@
   flex-shrink: 0;
   height: 100%;
   background: var(--sidebar-bg);
-  border-right: 1px solid var(--border);
+  border-right: var(--border-width) solid var(--border);
   padding: 24px 12px;
 }
 
@@ -19,13 +19,26 @@
 }
 
 .link {
+  position: relative;
   display: block;
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: 10px 12px 10px 16px;
+  border-radius: var(--radius-chip);
+  font-family: var(--font-satoshi), Inter, system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: var(--muted);
   transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 2px;
+  background: transparent;
 }
 
 .link:hover {
@@ -36,4 +49,8 @@
 .active {
   background: var(--hover-bg);
   color: var(--foreground);
+}
+
+.active::before {
+  background: var(--gradient-house);
 }
