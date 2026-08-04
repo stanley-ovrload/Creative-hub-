@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Sidebar from "@/components/sidebar";
 import TopBar from "@/components/top-bar";
+import { JobsProvider } from "@/lib/job-store";
 import "./globals.css";
 import styles from "./layout.module.css";
 
@@ -13,13 +14,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
       <body>
-        <div className={styles.shell}>
-          <Sidebar />
-          <div className={styles.content}>
-            <TopBar />
-            <main className={styles.main}>{children}</main>
+        <JobsProvider>
+          <div className={styles.shell}>
+            <Sidebar />
+            <div className={styles.content}>
+              <TopBar />
+              <main className={styles.main}>{children}</main>
+            </div>
           </div>
-        </div>
+        </JobsProvider>
       </body>
     </html>
   );

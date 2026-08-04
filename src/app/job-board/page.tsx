@@ -4,15 +4,17 @@ import { useMemo, useState } from "react";
 import BrandTag from "@/components/job-board/brand-tag";
 import FilterBar, { type BrandFilter } from "@/components/job-board/filter-bar";
 import StatusPill from "@/components/job-board/status-pill";
-import { JOBS } from "@/lib/jobs";
+import { useJobs } from "@/lib/job-store";
 import styles from "./page.module.css";
 
 export default function JobBoardPage() {
+  const { jobs: allJobs } = useJobs();
   const [filter, setFilter] = useState<BrandFilter>("all");
 
   const jobs = useMemo(
-    () => (filter === "all" ? JOBS : JOBS.filter((job) => job.brand === filter)),
-    [filter],
+    () =>
+      filter === "all" ? allJobs : allJobs.filter((job) => job.brand === filter),
+    [allJobs, filter],
   );
 
   return (
