@@ -1,14 +1,33 @@
 import fs from "fs";
 import path from "path";
 import Database from "better-sqlite3";
-import { JOBS as SEED_JOBS, type Brand, type Job, type JobStatus } from "./jobs";
+import {
+  JOBS as SEED_JOBS,
+  type Brand,
+  type Job,
+  type JobStatus,
+  type RecipeType,
+} from "./jobs";
 
-type JobRow = Job;
+type JobRow = Omit<Job, "plan"> & { plan: string | null };
 
 let db: Database.Database | null = null;
 
 function getDbPath(): string {
   return path.resolve(process.cwd(), process.env.DATABASE_PATH ?? "data/jobs.db");
+}
+
+function ensureColumn(
+  instance: Database.Database,
+  column: string,
+  definition: string,
+): void {
+  const columns = instance.prepare("PRAGMA table_info(jobs)").all() as {
+    name: string;
+  }[];
+  if (!columns.some((c) => c.name === column)) {
+    instance.exec(`ALTER TABLE jobs ADD COLUMN ${column} ${definition}`);
+  }
 }
 
 function getDb(): Database.Database {
@@ -26,12 +45,18 @@ function getDb(): Database.Database {
       brand TEXT NOT NULL,
       requestType TEXT NOT NULL,
       title TEXT NOT NULL,
+      brief TEXT NOT NULL DEFAULT '',
+      plan TEXT,
       status TEXT NOT NULL,
       userId TEXT NOT NULL,
       createdAt TEXT NOT NULL,
       updatedAt TEXT NOT NULL
     )
   `);
+
+  // Defensive migration for a data/jobs.db created before brief/plan existed.
+  ensureColumn(instance, "brief", "TEXT NOT NULL DEFAULT ''");
+  ensureColumn(instance, "plan", "TEXT");
 
   const { count } = instance
     .prepare("SELECT COUNT(*) AS count FROM jobs")
@@ -45,8 +70,8 @@ function getDb(): Database.Database {
 
 function seed(instance: Database.Database): void {
   const insert = instance.prepare(`
-    INSERT INTO jobs (id, brand, requestType, title, status, userId, createdAt, updatedAt)
-    VALUES (@id, @brand, @requestType, @title, @status, @userId, @createdAt, @updatedAt)
+    INSERT INTO jobs (id, brand, requestType, title, brief, plan, status, userId, createdAt, updatedAt)
+    VALUES (@id, @brand, @requestType, @title, @brief, @plan, @status, @userId, @createdAt, @updatedAt)
   `);
 
   const insertAll = instance.transaction((seeds: typeof SEED_JOBS) => {
@@ -55,23 +80,36 @@ function seed(instance: Database.Database): void {
       // Space seeds a minute apart, oldest last, so createdAt ordering
       // is meaningful from the first run.
       const createdAt = new Date(now - (index + 1) * 60_000).toISOString();
-      insert.run({ ...job, userId: "me", createdAt, updatedAt: createdAt });
+      insert.run({
+        ...job,
+        brief: job.title,
+        plan: null,
+        userId: "me",
+        createdAt,
+        updatedAt: createdAt,
+      });
     });
   });
 
   insertAll(SEED_JOBS);
 }
 
+function rowToJob(row: JobRow): Job {
+  return { ...row, plan: row.plan ? JSON.parse(row.plan) : null };
+}
+
 export function listJobs(): Job[] {
-  return getDb()
+  const rows = getDb()
     .prepare("SELECT * FROM jobs ORDER BY createdAt DESC")
     .all() as JobRow[];
+  return rows.map(rowToJob);
 }
 
 export function createJob(input: {
   brand: Brand;
   requestType: string;
   title: string;
+  brief: string;
   userId?: string;
 }): Job {
   const instance = getDb();
@@ -81,6 +119,8 @@ export function createJob(input: {
     brand: input.brand,
     requestType: input.requestType,
     title: input.title,
+    brief: input.brief,
+    plan: null,
     status: "queued",
     userId: input.userId ?? "me",
     createdAt: now,
@@ -89,10 +129,10 @@ export function createJob(input: {
 
   instance
     .prepare(
-      `INSERT INTO jobs (id, brand, requestType, title, status, userId, createdAt, updatedAt)
-       VALUES (@id, @brand, @requestType, @title, @status, @userId, @createdAt, @updatedAt)`,
+      `INSERT INTO jobs (id, brand, requestType, title, brief, plan, status, userId, createdAt, updatedAt)
+       VALUES (@id, @brand, @requestType, @title, @brief, @plan, @status, @userId, @createdAt, @updatedAt)`,
     )
-    .run(job);
+    .run({ ...job, plan: null });
 
   return job;
 }
@@ -118,7 +158,7 @@ export function claimOldestQueuedJob(): Job | undefined {
       .prepare("UPDATE jobs SET status = 'running', updatedAt = ? WHERE id = ?")
       .run(now, row.id);
 
-    return { ...row, status: "running", updatedAt: now };
+    return rowToJob({ ...row, status: "running", updatedAt: now });
   });
 
   return claim();
@@ -133,5 +173,24 @@ export function updateJobStatus(id: string, status: JobStatus): void {
 
   if (info.changes === 0) {
     throw new Error(`updateJobStatus: no job found with id ${id}`);
+  }
+}
+
+/** Flips requestType from "routing…" to the classified type and stores the plan. */
+export function updateJobClassification(
+  id: string,
+  requestType: RecipeType,
+  plan: string[],
+): void {
+  const instance = getDb();
+  const now = new Date().toISOString();
+  const info = instance
+    .prepare(
+      "UPDATE jobs SET requestType = ?, plan = ?, updatedAt = ? WHERE id = ?",
+    )
+    .run(requestType, JSON.stringify(plan), now, id);
+
+  if (info.changes === 0) {
+    throw new Error(`updateJobClassification: no job found with id ${id}`);
   }
 }

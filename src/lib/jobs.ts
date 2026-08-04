@@ -7,6 +7,8 @@ export type Job = {
   brand: Brand;
   requestType: string;
   title: string;
+  brief: string;
+  plan: string[] | null;
   status: JobStatus;
   userId: string;
   createdAt: string;
@@ -14,7 +16,7 @@ export type Job = {
 };
 
 // Seed shape: id/brand/requestType/title/status only — the store fills
-// in userId/createdAt/updatedAt when it seeds the database.
+// in brief/plan/userId/createdAt/updatedAt when it seeds the database.
 export type JobSeed = Pick<
   Job,
   "id" | "brand" | "requestType" | "title" | "status"
@@ -38,6 +40,37 @@ export function briefToTitle(brief: string): string {
   if (collapsed.length <= TITLE_MAX_LENGTH) return collapsed;
   return `${collapsed.slice(0, TITLE_MAX_LENGTH - 1).trimEnd()}…`;
 }
+
+// Fixed recipe library, keyed to the orchestrator's classified request type —
+// see "Recipe library" in orchestrator-spec.md. Deliberately not LLM-generated:
+// the spec calls for fixed, testable recipes rather than free planning.
+export const RECIPE_TYPES = [
+  "report",
+  "script",
+  "statics",
+  "broll",
+  "video",
+  "full_sweep",
+] as const;
+
+export type RecipeType = (typeof RECIPE_TYPES)[number];
+
+export const RECIPES: Record<RecipeType, string[]> = {
+  report: ["sourcing", "breakdown (report mode)", "docs"],
+  script: ["script writer"],
+  statics: ["static gen", "QC", "organizer"],
+  broll: ["planner (light)", "broll gen", "QC", "organizer"],
+  video: ["planner", "video gen", "QC", "organizer"],
+  full_sweep: [
+    "sourcing",
+    "breakdown x2",
+    "script writer",
+    "planner (per script)",
+    "video gen",
+    "QC",
+    "organizer",
+  ],
+};
 
 export const JOBS: JobSeed[] = [
   {

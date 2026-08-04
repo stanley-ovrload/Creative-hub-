@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     brand,
     requestType: PENDING_REQUEST_TYPE,
     title: briefToTitle(brief),
+    brief,
   });
 
   return NextResponse.json(job, { status: 201 });
