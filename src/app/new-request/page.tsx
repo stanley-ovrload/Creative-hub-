@@ -52,11 +52,11 @@ export default function NewRequestPage() {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>New request</h1>
+      <h1 className={styles.title}>new request</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.field}>
-          <span className={styles.label}>Brand</span>
+          <span className={styles.label}>brand</span>
           <OptionSelector
             options={BRAND_OPTIONS}
             value={brand}
@@ -65,7 +65,7 @@ export default function NewRequestPage() {
         </div>
 
         <div className={styles.field}>
-          <span className={styles.label}>Request type</span>
+          <span className={styles.label}>request type</span>
           <OptionSelector
             options={REQUEST_TYPE_OPTIONS}
             value={requestType}
@@ -75,7 +75,7 @@ export default function NewRequestPage() {
 
         <div className={styles.field}>
           <label className={styles.label} htmlFor="brief">
-            Brief
+            brief
           </label>
           <textarea
             id="brief"
@@ -88,7 +88,7 @@ export default function NewRequestPage() {
         </div>
 
         <button type="submit" className={styles.submit} disabled={!canSubmit}>
-          Submit request
+          submit request
         </button>
       </form>
     </div>

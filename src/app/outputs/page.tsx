@@ -10,7 +10,7 @@ export default function OutputsPage() {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Outputs</h1>
+      <h1 className={styles.title}>outputs</h1>
 
       {doneJobs.length === 0 ? (
         <p className={styles.empty}>No completed jobs yet.</p>

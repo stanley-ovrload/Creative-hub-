@@ -20,7 +20,7 @@ export default function JobBoardPage() {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Job board</h1>
+        <h1 className={styles.title}>job board</h1>
         <FilterBar active={filter} onChange={setFilter} />
       </div>
 
